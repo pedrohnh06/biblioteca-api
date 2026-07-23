@@ -62,6 +62,19 @@ def buscar_por_autor(valor_digitado):
 
     return [Livro(*registro) for registro in resultado]
 
+def buscar_por_id(valor_digitado):
+    conexao = criar_conexao()
+    cursor = conexao.cursor()
+    cursor.execute("SELECT * FROM livros WHERE id = ?", (valor_digitado,))
+    resultado = cursor.fetchone()
+    conexao.close()
+
+    if resultado:
+        return Livro(*resultado)
+    else:
+        return None
+
+
 def atualizar_livro(coluna, livro_id, novo_valor):
     """
     Atualiza um campo específico de um livro existente (UPDATE).
